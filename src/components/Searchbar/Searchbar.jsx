@@ -28,10 +28,12 @@ class Searchbar extends Component {
             value={this.state.searchQuery}
             onChange={this.handleChange}
           />
+          <button
+            type="submit"
+            className={styles.SearchButton}>
+            <span className={styles.buttonLabel}>Search</span>
+          </button>
         </form>
-        <button type="submit" className={styles.SearchButton}>
-          <span className={styles.buttonLabel}>Search</span>
-        </button>
       </header>
     );
   }

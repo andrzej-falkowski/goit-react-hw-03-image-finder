@@ -15,6 +15,7 @@ export default class App extends Component {
       images: [],
       isLoading: false,
       page: 1,
+      totalPages: null,
     };
   }
 
@@ -26,45 +27,75 @@ export default class App extends Component {
       )
       .then((res) => {
         const { data } = res;
-        this.setState({
-          images: data.hits,
-        });
-        console.log(this.state.images);
+        const totalHits = Math.ceil(data.totalHits / 12);
+        console.log(totalHits);
+        this.setState((prevState) => ({
+          images: [...prevState.images, ...data.hits],
+          totalPages: totalHits,
+        }));
       })
       .finally(() => {
         this.setState({ isLoading: false });
       });
   };
 
-  componentDidMount() {
-    this.fetchImages();
-  }
+  // componentDidMount() {
+  //   this.fetchImages();
+  // }
 
   componentDidUpdate(_prevProps, prevState) {
-    if (prevState.query !== this.state.query || prevState.page !== this.state) {
+    if (
+      prevState.query !== this.state.query ||
+      prevState.page !== this.state.page
+    ) {
       this.fetchImages();
     }
   }
+  // const { query, page, images } = this.state;
+  // const moreImages = this.fetchImages();
+  // this.setState((prevState) => ({
+  //   images: [...prevState.images, ...images],
+  //   isLoading: false,
+  // }));
 
-  handleSearch = searchQuery => {
+  // getMoreImages = () => {
+  //   const {page, query, images} = this.state;
+  //   this.fetchImages(page, query)
+  //   .then(images => {
+  //     this.setState((prevState) => ({
+  //       images: [...prevState.images, ...images],
+  //       isLoading: false,
+  //     }));
+  //   })
+  // };
+
+  handleSearch = (searchQuery) => {
     this.setState({
-      query: searchQuery
-    })
+      images: [],
+      page: 1,
+      query: "",
+      query: searchQuery,
+    });
+    // this.fetchImages();
   };
 
   loadMore = () => {
-    this.setState(prevState => ({
+    this.setState((prevState) => ({
+      isLoading: true,
+      ...prevState,
       page: prevState.page + 1,
     }));
+    console.log(this.state.page);
   };
 
   render() {
+    const { page, totalPages, isLoading } = this.state;
     return (
       <>
         <Searchbar onSubmit={this.handleSearch} />
-        {/* <Loader /> */}
         <ImageGallery {...this.state} />
-        <Button onClick={this.loadMore}/>
+        {totalPages > page && <Button onButtonClick={this.loadMore} />}
+        {isLoading && <Loader />}
         {/* <Modal /> */}
       </>
     );
