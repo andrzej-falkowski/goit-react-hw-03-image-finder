@@ -1,16 +1,15 @@
-import { TailSpin } from "react-loader-spinner";
+import { ThreeCircles } from "react-loader-spinner";
 import styles from "./Loader.module.scss";
 
 export const Loader = () => {
   return (
     <div className={styles.Loader}>
-      <TailSpin
+      <ThreeCircles
         visible={true}
-        height="80"
-        width="80"
-        color="#4fa94d"
-        ariaLabel="tail-spin-loading"
-        radius="1"
+        height="100"
+        width="100"
+        color="#f5bf03"
+        ariaLabel="three-circles-loading"
         wrapperStyle={{}}
         wrapperClass=""
       />

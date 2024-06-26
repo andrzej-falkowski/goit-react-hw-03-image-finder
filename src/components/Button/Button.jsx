@@ -3,7 +3,10 @@ import styles from "./Button.module.scss";
 
 const Button = ({ onButtonClick }) => {
   return (
-    <button className={styles.loadMoreBtn} type="button" onClick={onButtonClick}>
+    <button
+      className={styles.LoadMoreBtn}
+      type="button"
+      onClick={onButtonClick}>
       Load more
     </button>
   );

@@ -1,4 +1,5 @@
 import { Component } from "react";
+import PropTypes from "prop-types";
 import styles from "./Modal.module.scss";
 
 class Modal extends Component {
@@ -37,5 +38,12 @@ class Modal extends Component {
     );
   }
 }
+
+Modal.propTypes = {
+  handleKeyDown: PropTypes.func,
+  handleBackdropClick: PropTypes.func,
+  largeImageUrl: PropTypes.string,
+  tags: PropTypes.string,
+};
 
 export default Modal;

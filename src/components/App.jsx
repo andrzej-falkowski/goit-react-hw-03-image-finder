@@ -19,16 +19,16 @@ export default class App extends Component {
     };
   }
 
-  fetchImages = () => {
+  fetchImages = async () => {
     this.setState({ isLoading: true });
-    axios
+    await axios
       .get(
         `https://pixabay.com/api/?q=${this.state.query}&page=${this.state.page}&key=${this.state.apiKey}&image_type=photo&orientation=horizontal&per_page=12`,
       )
       .then((res) => {
         const { data } = res;
         const totalHits = Math.ceil(data.totalHits / 12);
-        console.log(totalHits);
+        // console.log(totalHits);
         this.setState((prevState) => ({
           images: [...prevState.images, ...data.hits],
           totalPages: totalHits,
@@ -63,7 +63,7 @@ export default class App extends Component {
 
   loadMore = () => {
     this.setState((prevState) => ({
-      isLoading: true,
+      // isLoading: true,
       ...prevState,
       page: prevState.page + 1,
     }));
@@ -71,15 +71,15 @@ export default class App extends Component {
   };
 
   render() {
-    const { page, totalPages, isLoading, showModal, largeImageURL } =
+    const { page, totalPages, isLoading} =
       this.state;
     return (
-      <>
+      <div className={styles.App}>
         <Searchbar onSubmit={this.handleSearch} />
         <ImageGallery {...this.state} />
         {totalPages > page && <Button onButtonClick={this.loadMore} />}
         {isLoading && <Loader />}
-      </>
+      </div>
     );
   }
 }
