@@ -51,23 +51,6 @@ export default class App extends Component {
       this.fetchImages();
     }
   }
-  // const { query, page, images } = this.state;
-  // const moreImages = this.fetchImages();
-  // this.setState((prevState) => ({
-  //   images: [...prevState.images, ...images],
-  //   isLoading: false,
-  // }));
-
-  // getMoreImages = () => {
-  //   const {page, query, images} = this.state;
-  //   this.fetchImages(page, query)
-  //   .then(images => {
-  //     this.setState((prevState) => ({
-  //       images: [...prevState.images, ...images],
-  //       isLoading: false,
-  //     }));
-  //   })
-  // };
 
   handleSearch = (searchQuery) => {
     this.setState({
@@ -76,7 +59,6 @@ export default class App extends Component {
       query: "",
       query: searchQuery,
     });
-    // this.fetchImages();
   };
 
   loadMore = () => {
@@ -85,18 +67,18 @@ export default class App extends Component {
       ...prevState,
       page: prevState.page + 1,
     }));
-    console.log(this.state.page);
+    // console.log(this.state.page);
   };
 
   render() {
-    const { page, totalPages, isLoading } = this.state;
+    const { page, totalPages, isLoading, showModal, largeImageURL } =
+      this.state;
     return (
       <>
         <Searchbar onSubmit={this.handleSearch} />
         <ImageGallery {...this.state} />
         {totalPages > page && <Button onButtonClick={this.loadMore} />}
         {isLoading && <Loader />}
-        {/* <Modal /> */}
       </>
     );
   }
